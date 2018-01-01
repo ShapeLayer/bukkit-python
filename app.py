@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 
 import filesearcher
@@ -8,8 +7,10 @@ fi = filesearcher
 
 xmx = 0
 xms = 0
-
 jav_path = []
+jav_dir = ''
+simnum= range(6,8)
+vernum= range(1,200)
 
 print('=====================================================')
 
@@ -49,23 +50,32 @@ except:
             load_set = json.loads(set_data)
             break
 
-if(load_set['java']=='0'):
-    print('서버 콘솔 환경 선택 : \n 1. 윈도우 cmd(common) 2. 윈도우 bash \n', end = '')
-    consol = str(input())
-    if(consol == '1'):
-        jav_checker('C:\\', '\\')
-    if(consol == '2'):
-        jav_checker('/mnt/c/', '/')
+for i in simnum:
+    dir_d = 'C:\\Program Files\\Java\\jre' + str(i) + '\\bin\\java.exe'
+    print('위치 : ' + dir_d)
+    if(os.path.exists(dir_d)):
+        jav_dir = dir_d
 
+if(jav_dir == ''):
+    for g in vernum:
+        dir_d = 'C:\\Program Files\\Java\\jre1.8.0_' + str(g) + '\\bin\\java.exe'
+        print('위치 : ' + dir_d)
+        if(os.path.exists(dir_d)):
+            jav_dir = dir_d
 
+if(jav_dir == ''):
+    for e in vernum:
+        dir_d = 'C:\\Program Files\\Java\\jdk1.8.0_' + str(e) + '\\bin\\java.exe'
+        print('위치 : ' + dir_d)
+        if(os.path.exists(dir_d)):
+            jav_dir = dir_d
 
+jar = os.getcwd() + '\\bukkit.jar'
+print('jav : ' + jav_dir)
 
-
-jar = fi.filename(os.getcwd(), '.jar')
-
-runcode = 'java -Xmx'+str(load_set['xmx'])+'M -Xms'+str(load_set['xms'])+'M -jar '+jar+' nogui'
-#print(runcode)
+runcode = '"' + str(jav_dir) + '" -Xmx' + str(load_set['xmx']) + 'M -Xms' + str(load_set['xms']) + 'M -jar "' + jar + '" nogui'
+print('run : ' + runcode)
 
 print('notice: 만약 서버 설정값이 잘못되거나 바뀌었다면 set.json 파일을 제거해주세요.')
-print('jar 탐지됨 : '+jar)
-os.system(runcode)
+print('jar 탐지됨 : ' + jar)
+os.system('"' + runcode + '"')
