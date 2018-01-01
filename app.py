@@ -11,10 +11,12 @@ xms = 0
 
 jav_path = []
 
+print('=====================================================')
 
 try:
     set_data = open('set.json').read()
     load_set = json.loads(set_data)
+    print('설정 탐지됨. 최대 메모리 : '+load_set['xmx']+'M, 최소 메모리 : '+load_set['xms']+'M.')
 except:
     while(1):
         set_json = []
@@ -64,7 +66,6 @@ jar = fi.filename(os.getcwd(), '.jar')
 runcode = 'java -Xmx'+str(load_set['xmx'])+'M -Xms'+str(load_set['xms'])+'M -jar '+jar+' nogui'
 #print(runcode)
 
-print('=====================================================')
 print('notice: 만약 서버 설정값이 잘못되거나 바뀌었다면 set.json 파일을 제거해주세요.')
-print('자동 탐지됨 : '+jar)
+print('jar 탐지됨 : '+jar)
 os.system(runcode)
