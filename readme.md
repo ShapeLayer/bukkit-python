@@ -47,3 +47,7 @@ sudo apt-get install default-jre
  python app.py
  ```
  )
+
+ ## 라이선스
+
+ 이 코드는 AGPL3.0 에 의거하여 보호되고 있습니다. 자세한 사항은 [파일](./LICENSE)을 참고하세요.
