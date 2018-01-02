@@ -28,18 +28,18 @@ except:
         print('최소 메모리(M) : ', end = '')
         set_json += [input()]
         
-        #while(1):
-            #print('자바 기본값 사용(y/n) : ', end = '')
-            #jav = input()
-            #if(jav == 'y' or jav == 'Y'):
-            #    set_json += "1"
-            #    break
-            #elif(jav == 'n' or jav == 'N'):
-            #    set_json += "0"
-            #    break
-            #else:
-            #    print('잘못된 값을 입력하였습니다.')
-            #    pass
+        while(1):
+            print('자바 기본값 사용(y/n) : ', end = '')
+            jav = input()
+            if(jav == 'y' or jav == 'Y'):
+                set_json += "1"
+                break
+            elif(jav == 'n' or jav == 'N'):
+                set_json += "0"
+                break
+            else:
+                print('잘못된 값을 입력하였습니다.')
+                pass
         set_json += '1'
 
         if(set_json[0] != '' and set_json[1] != '' and set_json[2] != ''):
@@ -50,28 +50,38 @@ except:
             load_set = json.loads(set_data)
             break
 
-for i in simnum:
-    dir_d = 'C:\\Program Files\\Java\\jre' + str(i) + '\\bin\\java.exe'
-    print('위치 : ' + dir_d)
-    if(os.path.exists(dir_d)):
-        jav_dir = dir_d
+if(load_set['java'] == '1'):
+    jav_dir = 'java'
 
-if(jav_dir == ''):
-    for g in vernum:
-        dir_d = 'C:\\Program Files\\Java\\jre1.8.0_' + str(g) + '\\bin\\java.exe'
+if(load_set['java'] == '0'):
+    for i in simnum:
+        dir_d = 'C:\\Program Files\\Java\\jre' + str(i) + '\\bin\\java.exe'
         print('위치 : ' + dir_d)
         if(os.path.exists(dir_d)):
             jav_dir = dir_d
 
-if(jav_dir == ''):
-    for e in vernum:
-        dir_d = 'C:\\Program Files\\Java\\jdk1.8.0_' + str(e) + '\\bin\\java.exe'
-        print('위치 : ' + dir_d)
-        if(os.path.exists(dir_d)):
-            jav_dir = dir_d
+    if(jav_dir == ''):
+        for g in vernum:
+            dir_d = 'C:\\Program Files\\Java\\jre1.8.0_' + str(g) + '\\bin\\java.exe'
+            print('위치 : ' + dir_d)
+            if(os.path.exists(dir_d)):
+                jav_dir = dir_d
 
-jar = os.getcwd() + '\\bukkit.jar'
-print('jav : ' + jav_dir)
+    if(jav_dir == ''):
+        for e in vernum:
+            dir_d = 'C:\\Program Files\\Java\\jdk1.8.0_' + str(e) + '\\bin\\java.exe'
+            print('위치 : ' + dir_d)
+            if(os.path.exists(dir_d)):
+                jav_dir = dir_d
+
+jar = fi.filename(os.getcwd(), '.jar')
+
+
+if(jav_dir == ''):
+    jav_dir = 'java'
+    print('자바가 발견되지 않았습니다. 환경변수를 사용합니다.')
+else:
+    print('jav : ' + jav_dir)
 
 runcode = '"' + str(jav_dir) + '" -Xmx' + str(load_set['xmx']) + 'M -Xms' + str(load_set['xms']) + 'M -jar "' + jar + '" nogui'
 print('run : ' + runcode)
